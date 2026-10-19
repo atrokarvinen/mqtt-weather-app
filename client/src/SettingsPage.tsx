@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
+import { getAppSettingsEndpoint, getStorageSettingsEndpoint } from "./api";
 
 type RuntimeSettings = {
   enabled: boolean;
@@ -93,7 +94,9 @@ function SettingsCard({
       setSaved(true);
     } catch (saveError) {
       setError(
-        saveError instanceof Error ? saveError.message : "Unable to save settings.",
+        saveError instanceof Error
+          ? saveError.message
+          : "Unable to save settings.",
       );
     } finally {
       setIsSaving(false);
@@ -186,16 +189,14 @@ export function SettingsPage() {
         <SettingsCard
           title="MqttWeatherApp"
           description="Controls forecast publishing and the app's MQTT notifier."
-          endpoint={import.meta.env.VITE_APP_SETTINGS_URL || "/app-settings"}
+          endpoint={getAppSettingsEndpoint}
           intervalLabel="Send interval"
           intervalField="sendInterval"
         />
         <SettingsCard
           title="MqttWeatherStorage"
           description="Controls the MQTT storage subscription and simulated processing delay."
-          endpoint={
-            import.meta.env.VITE_STORAGE_SETTINGS_URL || "/storage-settings"
-          }
+          endpoint={getStorageSettingsEndpoint}
           intervalLabel="Store time"
           intervalField="storeTime"
         />

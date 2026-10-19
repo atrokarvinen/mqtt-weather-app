@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getQueueDiagnosticsEndpoint } from "./api";
 
 type QueueDiagnostics = {
   queueSize: number;
@@ -19,16 +20,18 @@ export function QueueDiagnosticsPage() {
       setError(null);
 
       try {
-        const response = await fetch(
-          import.meta.env.VITE_QUEUE_DIAGNOSTICS_URL || "/queue-diagnostics",
-          { signal: controller.signal },
-        );
+        const response = await fetch(getQueueDiagnosticsEndpoint, {
+          signal: controller.signal,
+        });
         if (!response.ok) {
           throw new Error(`Queue diagnostics returned ${response.status}.`);
         }
 
         const diagnostics = (await response.json()) as QueueDiagnostics;
-        if (!Number.isInteger(diagnostics.queueSize) || diagnostics.queueSize < 0) {
+        if (
+          !Number.isInteger(diagnostics.queueSize) ||
+          diagnostics.queueSize < 0
+        ) {
           throw new Error("Queue diagnostics returned an invalid queue size.");
         }
 

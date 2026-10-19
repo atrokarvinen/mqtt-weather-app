@@ -5,6 +5,7 @@ import {
   type ConnectionStatus,
   type WeatherForecast,
 } from "./WeatherForecastContext";
+import { getWeatherForecastsEndpoint } from "./api";
 
 export function WeatherForecastProvider({ children }: { children: ReactNode }) {
   const [forecasts, setForecasts] = useState<WeatherForecast[]>([]);
@@ -21,10 +22,9 @@ export function WeatherForecastProvider({ children }: { children: ReactNode }) {
 
     const loadInitialForecasts = async () => {
       try {
-        const response = await fetch(
-          import.meta.env.VITE_WEATHER_STORAGE_URL || "/weather-storage",
-          { signal: controller.signal },
-        );
+        const response = await fetch(getWeatherForecastsEndpoint, {
+          signal: controller.signal,
+        });
         if (!response.ok) {
           throw new Error(`Weather storage returned ${response.status}.`);
         }
@@ -57,9 +57,7 @@ export function WeatherForecastProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     setLoadError(null);
     try {
-      const response = await fetch(
-        import.meta.env.VITE_WEATHER_STORAGE_URL || "/weather-storage",
-      );
+      const response = await fetch(getWeatherForecastsEndpoint);
       if (!response.ok) {
         throw new Error(`Weather storage returned ${response.status}.`);
       }
