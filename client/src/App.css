@@ -1,0 +1,532 @@
+.weather-app {
+  min-height: 100vh;
+  padding: 28px clamp(20px, 6vw, 88px) 72px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(
+      ellipse at 82% 8%,
+      rgba(255, 199, 116, 0.32),
+      transparent 32rem
+    ),
+    linear-gradient(145deg, #f7f8f4 0%, #edf3f4 100%);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.brand,
+.connection-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-actions,
+.app-navigation {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.app-navigation {
+  gap: 6px;
+}
+
+.app-navigation a {
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: #53656c;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.app-navigation a.active {
+  background: rgba(36, 78, 75, 0.1);
+  color: #244e4b;
+}
+
+.brand {
+  color: #172c38;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.brand-icon {
+  color: #e8a43b;
+  font-size: 24px;
+}
+
+.connection-status {
+  color: #53656c;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e4a847;
+  box-shadow: 0 0 0 4px rgba(228, 168, 71, 0.14);
+}
+
+.connection-status.connected .status-indicator {
+  background: #39a879;
+  box-shadow: 0 0 0 4px rgba(57, 168, 121, 0.14);
+}
+
+.connection-status.reconnecting .status-indicator {
+  background: #e4a847;
+}
+
+.connection-status.disconnected .status-indicator {
+  background: #d66d5e;
+  box-shadow: 0 0 0 4px rgba(214, 109, 94, 0.14);
+}
+
+.connection-status.disabled .status-indicator {
+  background: #9ba8a8;
+  box-shadow: 0 0 0 4px rgba(155, 168, 168, 0.14);
+}
+
+.forecast-section {
+  width: min(100%, 760px);
+  margin: clamp(72px, 13vh, 132px) auto 0;
+}
+
+.diagnostics-section {
+  width: min(100%, 760px);
+  margin: clamp(72px, 13vh, 132px) auto 0;
+}
+
+.settings-section {
+  width: min(100%, 760px);
+  margin: clamp(72px, 13vh, 132px) auto 0;
+}
+
+.settings-section > h1 {
+  margin: 0;
+  color: #172c38;
+  font-size: clamp(38px, 7vw, 64px);
+  font-weight: 650;
+  letter-spacing: -2.6px;
+  line-height: 1.05;
+}
+
+.settings-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.settings-card {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18px 54px rgba(35, 68, 76, 0.09);
+}
+
+.settings-card h2 {
+  margin: 0;
+  color: #203640;
+  font-size: 20px;
+}
+
+.settings-card > div > p {
+  margin: 8px 0 0;
+  color: #718187;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.settings-card form {
+  display: grid;
+  gap: 18px;
+}
+
+.settings-enabled {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #344c50;
+  cursor: pointer;
+}
+
+.settings-enabled span {
+  display: grid;
+  gap: 4px;
+}
+
+.settings-enabled small {
+  color: #718187;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.settings-enabled input {
+  width: 18px;
+  height: 18px;
+  accent-color: #367d70;
+}
+
+.settings-interval {
+  display: grid;
+  gap: 8px;
+  color: #344c50;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.settings-interval input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid #ccd8d7;
+  border-radius: 6px;
+  background: #fff;
+  color: #203640;
+}
+
+.settings-status,
+.settings-success {
+  margin: 0;
+  font-size: 13px;
+}
+
+.settings-status {
+  color: #718187;
+}
+
+.settings-success {
+  color: #287b5a;
+}
+
+.diagnostics-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.diagnostics-heading h1 {
+  margin: 0;
+  color: #172c38;
+  font-size: clamp(38px, 7vw, 64px);
+  font-weight: 650;
+  letter-spacing: -2.6px;
+  line-height: 1.05;
+}
+
+.queue-size-card {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 24px 70px rgba(35, 68, 76, 0.12);
+}
+
+.queue-size-card p {
+  margin: 0;
+  color: #64757a;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.queue-size-card strong {
+  color: #18313c;
+  font-size: 54px;
+  font-weight: 350;
+  letter-spacing: -2px;
+}
+
+.queue-size-card span,
+.diagnostics-note {
+  color: #718187;
+  font-size: 13px;
+}
+
+.diagnostics-note {
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: #528176;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.forecast-section > h1 {
+  margin: 0;
+  color: #172c38;
+  font-size: clamp(38px, 7vw, 64px);
+  font-weight: 650;
+  letter-spacing: -2.6px;
+  line-height: 1.05;
+}
+
+.intro {
+  margin-top: 18px;
+  color: #64757a;
+  font-size: 16px;
+}
+
+.forecast-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 22px;
+  margin-top: 28px;
+}
+
+.refresh-button {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 6px;
+  background: #244e4b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.refresh-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.live-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #344c50;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.live-toggle input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #367d70;
+}
+
+.forecast-count {
+  margin-left: auto;
+  color: #718187;
+  font-size: 13px;
+}
+
+.load-error {
+  margin-top: 18px;
+  color: #a34438;
+  font-size: 14px;
+}
+
+.forecast-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.forecast-card,
+.empty-card {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 24px 70px rgba(35, 68, 76, 0.12);
+  backdrop-filter: blur(16px);
+}
+
+.forecast-card {
+  padding: 22px 26px 18px;
+}
+
+.forecast-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.forecast-date {
+  margin-bottom: 8px;
+  color: #728186;
+  font-size: 14px;
+}
+
+.forecast-heading h2,
+.empty-card h2 {
+  margin: 0;
+  color: #203640;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.forecast-reading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.weather-icon {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.temperature {
+  margin-top: 0;
+  color: #18313c;
+  font-size: 54px;
+  font-weight: 300;
+  letter-spacing: -3px;
+  line-height: 1;
+}
+
+.temperature span {
+  margin-left: 4px;
+  color: #507178;
+  font-size: 0.45em;
+  letter-spacing: 0;
+  vertical-align: top;
+}
+
+.fahrenheit {
+  margin: 0;
+  color: #718187;
+  font-size: 16px;
+}
+
+.forecast-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid #e8eeed;
+  color: #77868a;
+  font-size: 12px;
+}
+
+.empty-card {
+  margin-top: 28px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.empty-card h2 {
+  margin-top: 12px;
+  font-size: 20px;
+}
+
+.empty-card p {
+  margin-top: 8px;
+  color: #718187;
+  font-size: 14px;
+}
+
+.loading-icon {
+  display: inline-block;
+  color: #63a394;
+  font-size: 44px;
+  line-height: 1;
+  animation: drift 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  to {
+    transform: translateY(-7px);
+  }
+}
+
+@media (max-width: 520px) {
+  .weather-app {
+    padding-top: 20px;
+  }
+
+  .connection-status {
+    font-size: 11px;
+  }
+
+  .header-actions {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  .app-navigation {
+    gap: 0;
+  }
+
+  .app-navigation a {
+    padding: 6px;
+    font-size: 11px;
+  }
+
+  .forecast-count {
+    margin-left: 0;
+  }
+
+  .forecast-section {
+    margin-top: 84px;
+  }
+
+  .forecast-card {
+    padding: 18px;
+  }
+
+  .forecast-heading {
+    gap: 12px;
+  }
+
+  .forecast-heading h2 {
+    font-size: 20px;
+  }
+
+  .forecast-reading {
+    gap: 8px;
+  }
+
+  .weather-icon {
+    display: none;
+  }
+
+  .temperature {
+    font-size: 42px;
+  }
+
+  .forecast-footer {
+    flex-direction: column;
+  }
+
+  .diagnostics-section {
+    margin-top: 84px;
+  }
+
+  .settings-section {
+    margin-top: 84px;
+  }
+
+  .diagnostics-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

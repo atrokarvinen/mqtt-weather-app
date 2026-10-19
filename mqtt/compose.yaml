@@ -1,0 +1,26 @@
+name: mqtt-weather-app
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    environment:
+      MOSQUITTO_USERNAME: ${MOSQUITTO_USERNAME:?Set MOSQUITTO_USERNAME in .env}
+      MOSQUITTO_PASSWORD: ${MOSQUITTO_PASSWORD:?Set MOSQUITTO_PASSWORD in .env}
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - mosquitto_data:/mosquitto/data
+    command:
+      - /bin/sh
+      - -c
+      - >-
+        rm -f /mosquitto/data/password_file &&
+        mosquitto_passwd -b -c /mosquitto/data/password_file "$$MOSQUITTO_USERNAME" "$$MOSQUITTO_PASSWORD" &&
+        chown mosquitto:mosquitto /mosquitto/data/password_file &&
+        chmod 0700 /mosquitto/data/password_file &&
+        exec mosquitto -c /mosquitto/config/mosquitto.conf
+
+volumes:
+  mosquitto_data:
